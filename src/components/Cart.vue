@@ -20,7 +20,7 @@
       <div class="remove"> </div>
     </div>
     </div>
-	<button @click="addCartItem({ name: 'product3', id: 3, price: 10, qu: 2 })"> Add Item</button>
+	<!-- <button @click="addCartItem({ name: 'product3', id: 3, price: 10, qu: 2 })"> Add Item</button> -->
   </div>
 </div>
 </template>
@@ -66,8 +66,15 @@ export default {
   },
   methods: {
     addCartItem: function(item) {
-      item.id = uuidv1();
-      this.cartItems.push(item);
+	//   item.id = uuidv1();
+	  let index = this.cartItems.findIndex(_ => {
+        return _.id == item.id;
+      });
+	  if(index == -1){
+		  this.cartItems.push(item);
+	  }else{
+		  this.upQu(this.cartItems[index]);
+	  }
     },
     removeCartItem: function(id) {
       const index = this.cartItems.findIndex(item => {
@@ -92,7 +99,7 @@ export default {
 }
 .cart-table {
   margin: 0 auto;
-  width: 50%;
+  width: 100%;
   text-align-last: left;
   .table-header,
   .table-footer,
@@ -114,7 +121,7 @@ export default {
       justify-content: space-around;
     }
   }
-  .table-header {
+  .table-header, .table-footer {
     background-color: black;
     color: white;
     font-weight: bold;
