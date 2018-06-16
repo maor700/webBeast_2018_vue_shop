@@ -46,7 +46,7 @@ export default {
 	computed: {
     calcTotalPrice: function() {
       let total = 0;
-      return this.cartItems
+      return this.cartItems.length && this.cartItems
         .map(item => {
           return item.price * item.qu;
         })
@@ -56,7 +56,7 @@ export default {
     },
     calcTotalQu: function() {
       let total = 0;
-      return this.cartItems
+      return this.cartItems.length && this.cartItems
         .map(item => {
           return item.qu;
         })
@@ -75,7 +75,7 @@ export default {
 			  return item.id == id;
 		  });
 		  (index != -1) && this.cartItems.splice(index,1);
-	  } 
+	  }
   }
 
 }
