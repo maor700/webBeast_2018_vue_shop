@@ -29,39 +29,5 @@ export default {
 <style lang="less">
 #app {
   font-family: Arial, Helvetica, sans-serif;
-  .price {
-    margin: 0 1em;
-  }
-  .cart-table {
-    margin: 0 auto;
-    width: 50%;
-    text-align-last: left;
-    .table-header,
-    .table-footer,
-    .cart-items > .item {
-      border: 1px solid gray;
-      padding: 0.3em;
-      display: flex;
-      .name {
-        flex: 50;
-      }
-      .price,
-      .qu {
-        flex: 25;
-      }
-    }
-
-    .cart-items > .item {
-      .qu {
-        display: flex;
-        justify-content: space-around;
-      }
-    }
-    .table-header {
-      background-color: black;
-      color: white;
-      font-weight: bold;
-    }
-  }
 }
 </style>
