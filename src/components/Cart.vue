@@ -8,16 +8,7 @@
       <div class="remove">remove</div>
     </div>
     <div class="cart-items">
-    <div class="item" v-for="item in cartItems" :key="item.id">
-      <span class="name">{{item.name}}</span>
-      <div class="qu">
-        <button @click="downQu(item)">-</button>
-        <span>{{item.qu}}</span>
-        <button @click="upQu(item)">+</button>
-        </div>
-      <span class="price">{{item.price}}$</span>
-	  <div @click="removeCartItem(item.id)" class="remove">X</div>
-    </div>
+    		<CartItem class="item" v-for="item in cartItems" :key="item.id" :item="item" @removeCartItem="removeCartItem($event)"/>
     <div class="table-footer">
       <div class="name"></div>
       <div class="qu">{{calcTotalQu}}</div>
@@ -26,18 +17,19 @@
     </div>
     </div>
 	<button @click="addCartItem({ name: 'product3', id: 3, price: 10, qu: 2 })"> Add Item</button>
-	<button @click="removeCartItem(3)"> Remove Item</button>
   </div>
 </div>
 </template>
 
 
 <script>
+import CartItem from "./CartItem";
 const uuidv1 = require("uuid/v1");
 
 export default {
   name: "Cart",
   props: ["cartItems"],
+  components: { CartItem },
   data() {
     return {};
   },
@@ -70,13 +62,6 @@ export default {
     }
   },
   methods: {
-    upQu: function(item) {
-      item.qu++;
-    },
-    downQu: function(item) {
-		item.qu--;
-		(item.qu == 0) && this.removeCartItem(item.id);
-	},
     addCartItem: function(item) {
       item.id = uuidv1();
       this.cartItems.push(item);
