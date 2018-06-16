@@ -11,9 +11,9 @@
     <div class="item" v-for="item in cartItems" :key="item.id">
       <span class="name">{{item.name}}</span>
       <div class="qu">
-        <button @click="()=>{item.qu--}">-</button>
+        <button @click="downQu(item)">-</button>
         <span>{{item.qu}}</span>
-        <button @click="()=>{item.qu++}">+</button>
+        <button @click="upQu(item)">+</button>
         </div>
       <span class="price">{{item.price}}$</span>
 	  <div @click="removeCartItem(item.id)" class="remove">X</div>
@@ -33,54 +33,63 @@
 
 
 <script>
-const uuidv1 = require('uuid/v1');
+const uuidv1 = require("uuid/v1");
 
 export default {
-	name: "Cart",
-	props: ["cartItems"],
-	data(){
-		return {
-
-		}
-	},
-	computed: {
+  name: "Cart",
+  props: ["cartItems"],
+  data() {
+    return {};
+  },
+  computed: {
     calcTotalPrice: function() {
       let total = 0;
-      return this.cartItems.length && this.cartItems
-        .map(item => {
-          return item.price * item.qu;
-        })
-        .reduce((total, currentval) => {
-          return total + currentval;
-        });
+      return (
+        this.cartItems.length &&
+        this.cartItems
+          .map(item => {
+            return item.price * item.qu;
+          })
+          .reduce((total, currentval) => {
+            return total + currentval;
+          })
+      );
     },
     calcTotalQu: function() {
       let total = 0;
-      return this.cartItems.length && this.cartItems
-        .map(item => {
-          return item.qu;
-        })
-        .reduce((total, currentval) => {
-          return total + currentval;
-        });
+      return (
+        this.cartItems.length &&
+        this.cartItems
+          .map(item => {
+            return item.qu;
+          })
+          .reduce((total, currentval) => {
+            return total + currentval;
+          })
+      );
     }
   },
   methods: {
-	  addCartItem: function(item){
-		  item.id = uuidv1();
-		  this.cartItems.push(item);
-	  },
-	  removeCartItem: function(id) {
-		  const index = this.cartItems.findIndex((item)=>{
-			  return item.id == id;
-		  });
-		  (index != -1) && this.cartItems.splice(index,1);
-	  }
+    upQu: function(item) {
+      item.qu++;
+    },
+    downQu: function(item) {
+		item.qu--;
+		(item.qu == 0) && this.removeCartItem(item.id);
+	},
+    addCartItem: function(item) {
+      item.id = uuidv1();
+      this.cartItems.push(item);
+    },
+    removeCartItem: function(id) {
+      const index = this.cartItems.findIndex(item => {
+        return item.id == id;
+      });
+      index != -1 && this.cartItems.splice(index, 1);
+    }
   }
-
-}
+};
 </script>
 
 <style lang="less">
-
 </style>
