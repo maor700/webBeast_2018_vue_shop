@@ -1,31 +1,14 @@
 <template>
   <div id="app">
-<div class="header">
-  <h1>My Shop</h1>
-</div>
-
-<div class="my-cart-con">
-  <div class="cart-table">
-    <div class="table-header">
-      <div class="name">name</div>
-      <div class="qu">qu</div>
-      <div class="price">price</div>
+    <div class="header">
+      <h1>My Shop</h1>
     </div>
-    <div class="cart-items">
-    <div class="item" v-for="item in cartItems" :key="item.id">
-      <span class="name">{{item.name}}</span>
-      <div class="qu">
-        <span>{{item.qu}}</span>
-        </div>
-      <span class="price">{{item.price * item.qu}}$</span>
-    </div>
-    </div>
-  </div>
-</div>
+    <Cart :cartItems="cartItems"/>
   </div>
 </template>
 
 <script>
+import Cart from './components/Cart';
 const cartItems = [
   { name: "product1", id: 1, price: 30, qu: 1 },
   { name: "product2", id: 2, price: 20, qu: 3 },
@@ -33,6 +16,7 @@ const cartItems = [
 ];
 export default {
   name: "app",
+  components: {Cart},
   data() {
     return {
       cartItems
