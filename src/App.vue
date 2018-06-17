@@ -4,7 +4,7 @@
       <h1>My Shop</h1>
     </div>
     <Cart ref="cartComp" :cartItems="cartItems"/>
-    <Products :pList="pList" @addProductToCart="addProductToCart"/>
+    <Products :pList="pList" :inCart="(loaded && calcInCart()) || []" @addProductToCart="addProductToCart"/>
   </div>
 </template>
 
@@ -34,10 +34,21 @@ export default {
   data() {
     return {
       cartItems,
-      pList
+      pList,
+      inCart:[],
+      loaded:false
     };
   },
+  computed:{
+    },
+    mounted: function(){
+      this.loaded = true;
+    },
   methods:{
+    calcInCart: function(){
+      console.log(this.$refs.cartComp);
+      return this.inCart =  this.$refs.cartComp.cartItems.map((item)=>(item.id))
+    },
     addProductToCart: function(product){
       const item = {
         name: product.name,
@@ -46,6 +57,7 @@ export default {
         qu:1
       }
       this.$refs.cartComp.addCartItem(item);
+      this.calcInCart();
     }
   }
 };
